@@ -1,0 +1,165 @@
+{% extends 'utilizador/layout.html' %}
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load fegt9_mpg_proteksaun_url %}
+
+
+		<!-- ============================================================== -->
+						<!-- pageheader  -->
+						<!-- ============================================================== -->
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="page-header">
+									<h2 class="pageheader-title">Detallu husi Purchase request  </h2>
+									<p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+									<div class="page-breadcrumb">
+										<nav aria-label="breadcrumb">
+											<ol class="breadcrumb">
+												<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">CVTL</a></li>
+												<li class="breadcrumb-item active" aria-current="page">Hris Painel</li>
+											</ol>
+
+                                            
+										</nav>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- ============================================================== -->
+						<!-- end pageheader  -->
+						<!-- ============================================================== -->
+						<div class="ecommerce-widget">
+	
+				
+                            <div class="row">
+                                <div class="  col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="card">
+                                        <div class="card-header p-4">
+                                             <a class="pt-2 d-inline-block" href="index.html">
+												<b>Titulu </b> : {{purchaserequest.title}} <br>
+												<b>Atividade :</b> {{purchaserequest.activity}} <br> <b>Project :</b> {{purchaserequest.project}} </a>
+                                           
+                                            <div class="float-right"> <h3 class="mb-0">Purchase Request</h3>
+												{{purchaserequest.request_date}}</div>
+                                        </div>
+                                        <div class="card-body">
+                                       <legend>
+										<h5 class="card-header">Purchase Request  <a href="{% url 'purchase_request:additempurchase'  purchaserequest.id|encrypt_id_tag  %}" class="btn btn-primary btn-sm float-right ">  <i class="far fa-paper-plane"></i> Add Item</a></h5>
+
+                                        
+									   </legend>
+									   <div class="table-responsive">
+										<table class="table table-sm table-bordered">
+											<thead class="bg-light">
+												<tr class="border-0">
+													<th class="border-0">Nu</th>
+													<th class="border-0"> Item Description</th>
+											
+													<th class="border-0">Description</th>
+	
+													<th class="border-0">Quantity</th>
+													<th class="border-0">Unit</th>
+													<th class="border-0">Delivery</th>
+													<th class="border-0">Status</th>
+													<th class="border-0">#</th>
+											
+												</tr>
+											</thead>
+											<tbody>
+	
+												{% for dados in itempurchaserequest %}
+												<tr>
+												
+													<td>{{forloop.counter}}</td>
+													<td>{{dados.item_description}}</td>
+				
+													<td>{{dados.description}}</td>
+													<td>{{dados.quantity}}</td>
+													<td>{{dados.unit}}</td>
+													<td>{{dados.is_delivery}}</td>
+													<td>
+														
+														{% if dados.status == 'Rejected' %}
+														<font color='red'>
+															{{dados.status}}
+														</font>
+														{% else %}
+
+														{{dados.status}}
+													  	{% endif %}
+														
+													</td>
+							
+											
+													<td>
+	
+	
+														
+			 <a href="{% url 'purchase_request:edititempurchase' dados.id|encrypt_id_tag %}" class="btn btn-primary btn-sm" >  <i class="fas fa-edit"></i> </a>
+													  <a href="{% url 'purchase_request:apagaitempurchase' dados.id|encrypt_id_tag %}" class="btn btn-primary btn-sm" >  <i class="fas fa-trash"></i> </a>
+
+
+													  {% if dados.status == 'Rejected' %}
+													  <a href="{% url 'purchase_request:aproveditempurchase' dados.id|encrypt_id_tag %}" class="btn btn-primary btn-sm" >  <i class="fas fa-check"></i> Aproved </a>
+
+													  {% endif %}
+
+													  {% if dados.status == 'Aproved' or dados.status == 'Pendende'  %}
+													  	 
+													  <a href="{% url 'purchase_request:rijectitempurchase' dados.id|encrypt_id_tag %}" class="btn btn-danger btn-sm" >  <i class="fas fa-window-close"></i> Rijected </a>
+												
+													  {% endif %}
+
+
+
+
+													  <a href="{% url 'purchase_request:deliveritempurchase' dados.id|encrypt_id_tag %}" class="btn btn-primary btn-sm" >  <i class="fas fa-check"></i> Deliver </a>
+												
+													
+													 
+	
+													</td>
+												</tr>
+												{% endfor %}
+											
+											</tbody>
+										</table>
+
+
+									   </div>
+									  
+                                        </div>
+                                        <div class="card-footer bg-white">
+                                            <p class="mb-0">2983 Glenview Drive Corpus Christi, TX 78476</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						
+
+
+							<div class="row">
+                                <div class="  col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="card">
+                               
+                                        <div class="card-body" style="background-color: #efeff6;">
+                              
+								
+
+			{% include 'timeline.html' %}
+									   </div>
+									  
+                                        </div>
+                                        <div class="card-footer bg-white">
+                                            <p class="mb-0">2983 Glenview Drive Corpus Christi, TX 78476</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+
+
+
+{% endblock content %}
